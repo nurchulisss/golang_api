@@ -1,9 +1,10 @@
 package helpers
 
 import (
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/api/middleware"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/nurchulis/go-api/api/middleware"
 )
 
 // GetAuthUser returns the authenticated user details from the Gin context
@@ -23,19 +24,3 @@ func GetAuthUser(c *gin.Context) *middleware.AuthUser {
 
 	return nil
 }
-
-//func getAuthId(c *gin.Context) (uint, bool) {
-//user, ok := GetAuthUser(c)
-//
-//if !ok {
-//	return 0, false
-//}
-
-//userId, ok := user.ID.(uint)
-//
-//if !ok {
-//	return 0, false
-//}
-//
-//return userId, true
-//}

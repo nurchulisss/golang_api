@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/api/controllers"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/api/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/nurchulis/go-api/api/controllers"
+	"github.com/nurchulis/go-api/api/middleware"
 )
 
 func GetRoute(r *gin.Engine) {
@@ -23,39 +23,15 @@ func GetRoute(r *gin.Engine) {
 		userRouter.DELETE("/delete-permanent/:id", controllers.PermanentlyDeleteUser)
 	}
 
-	// Category routes
-	catRouter := r.Group("/api/categories")
+	// Task routes
+	taskRouter := r.Group("/api/tasks")
 	{
-		//catRouter.Use(middleware.RequireAuth)
-
-		catRouter.GET("/", controllers.GetCategories)
-		catRouter.POST("/create", controllers.CreateCategory)
-		catRouter.GET("/:id/edit", controllers.EditCategory)
-		catRouter.PUT("/:id/update", controllers.UpdateCategory)
-		catRouter.DELETE("/:id/delete", controllers.DeleteCategory)
-		catRouter.GET("/all-trash", controllers.GetTrashCategories)
-		catRouter.DELETE("/delete-permanent/:id", controllers.DeleteCategoryPermanent)
-	}
-
-	// Post routes
-	postRouter := r.Group("/api/posts")
-	{
-		postRouter.GET("/", controllers.GetPosts)
-		postRouter.POST("/create", controllers.CreatePost)
-		postRouter.GET("/:id/show", controllers.ShowPost)
-		postRouter.GET(":id/edit", controllers.EditPost)
-		postRouter.PUT("/:id/update", controllers.UpdatePost)
-		postRouter.DELETE("/:id/delete", controllers.DeletePost)
-		postRouter.GET("/all-trash", controllers.GetTrashedPosts)
-		postRouter.DELETE("/delete-permanent/:id", controllers.PermanentlyDeletePost)
-	}
-
-	// Comment routes
-	commentRouter := r.Group("/api/posts/:id/comment")
-	{
-		commentRouter.POST("/store", controllers.CommentOnPost)
-		commentRouter.GET("/:comment_id/edit", controllers.EditComment)
-		commentRouter.PUT("/:comment_id/update", controllers.UpdateComment)
-		commentRouter.DELETE("/:comment_id/delete", controllers.DeleteComment)
+		taskRouter.GET("/", controllers.GetTask)
+		taskRouter.POST("/create", controllers.CreateTask)
+		taskRouter.GET("/:id/show", controllers.ShowTask)
+		taskRouter.PUT("/:id/update", controllers.UpdateTask)
+		taskRouter.DELETE("/:id/delete", controllers.DeleteTask)
+		taskRouter.GET("/all-trash", controllers.GetTrashedTask)
+		taskRouter.DELETE("/delete-permanent/:id", controllers.PermanentlyDeleteTask)
 	}
 }

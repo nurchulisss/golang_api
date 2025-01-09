@@ -2,13 +2,14 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/db/initializers"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/models"
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/nurchulis/go-api/db/initializers"
+	"github.com/nurchulis/go-api/internal/models"
 )
 
 type AuthUser struct {

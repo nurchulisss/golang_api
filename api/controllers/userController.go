@@ -1,19 +1,20 @@
 package controllers
 
 import (
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/db/initializers"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/format-errors"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/models"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/pagination"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/validations"
-	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
-	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/nurchulis/go-api/db/initializers"
+	format_errors "github.com/nurchulis/go-api/internal/format-errors"
+	"github.com/nurchulis/go-api/internal/models"
+	"github.com/nurchulis/go-api/internal/pagination"
+	"github.com/nurchulis/go-api/internal/validations"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // Signup function is used to create a user or signup a user
@@ -27,6 +28,7 @@ func Signup(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&userInput); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
+
 			c.JSON(http.StatusUnprocessableEntity, gin.H{
 				"validations": validations.FormatValidationErrors(errs),
 			})
@@ -48,17 +50,7 @@ func Signup(c *gin.Context) {
 		})
 		return
 	}
-	//if err := initializers.DB.Where("email = ?", userInput.Email).First(&models.User{}).Error; err == nil {
-	//	c.JSON(http.StatusConflict, gin.H{
-	//		"validations": map[string]interface{}{
-	//			"Email": "The email is already exist!",
-	//		},
-	//	})
-	//
-	//	return
-	//}
 
-	// Hash the password
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(userInput.Password), 10)
 
 	if err != nil {
@@ -148,7 +140,9 @@ func Login(c *gin.Context) {
 	// Set expiry time and send the token back
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
-	c.JSON(http.StatusOK, gin.H{})
+	c.JSON(http.StatusOK, gin.H{
+		"authorization": tokenString,
+	})
 }
 
 // Logout function is used to log out a user
@@ -305,12 +299,6 @@ func GetTrashedUsers(c *gin.Context) {
 		format_errors.InternalServerError(c)
 		return
 	}
-
-	//result := initializers.DB.Unscoped().Where("deleted_at IS NOT NULL").Find(&users)
-	//if err := result.Error; err != nil {
-	//	format_errors.InternalServerError(c)
-	//	return
-	//}
 
 	// Return the users
 	c.JSON(http.StatusOK, gin.H{

@@ -1,10 +1,11 @@
 package tests
 
 import (
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/db/initializers"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/models"
-	"github.com/joho/godotenv"
 	"log"
+
+	"github.com/joho/godotenv"
+	"github.com/nurchulis/go-api/db/initializers"
+	"github.com/nurchulis/go-api/internal/models"
 )
 
 // DatabaseRefresh runs fresh migration
@@ -19,13 +20,13 @@ func DatabaseRefresh() {
 	initializers.ConnectDB()
 
 	// Drop all the tables
-	err = initializers.DB.Migrator().DropTable(models.User{}, models.Category{}, models.Post{}, models.Comment{})
+	err = initializers.DB.Migrator().DropTable(models.User{})
 	if err != nil {
 		log.Fatal("Table dropping failed")
 	}
 
 	// Migrate again
-	err = initializers.DB.AutoMigrate(models.User{}, models.Category{}, models.Post{}, models.Comment{})
+	err = initializers.DB.AutoMigrate(models.User{})
 
 	if err != nil {
 		log.Fatal("Migration failed")

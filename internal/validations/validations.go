@@ -2,8 +2,9 @@ package validations
 
 import (
 	"fmt"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/db/initializers"
+
 	"github.com/go-playground/validator/v10"
+	"github.com/nurchulis/go-api/db/initializers"
 )
 
 func IsUniqueValue(tableName, fieldName, value string) bool {

@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/config"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/db/initializers"
-	"github.com/RakibSiddiquee/golang-gin-jwt-auth-crud/internal/models"
 	"log"
+
+	"github.com/nurchulis/go-api/config"
+	"github.com/nurchulis/go-api/db/initializers"
+	"github.com/nurchulis/go-api/internal/models"
 )
 
 func init() {
@@ -13,12 +14,12 @@ func init() {
 }
 
 func main() {
-	err := initializers.DB.Migrator().DropTable(models.User{}, models.Category{}, models.Post{}, models.Comment{})
+	err := initializers.DB.Migrator().DropTable(models.User{}, models.Task{})
 	if err != nil {
 		log.Fatal("Table dropping failed")
 	}
 
-	err = initializers.DB.AutoMigrate(models.User{}, models.Category{}, models.Post{}, models.Comment{})
+	err = initializers.DB.AutoMigrate(models.User{}, models.Task{})
 
 	if err != nil {
 		log.Fatal("Migration failed")

@@ -1,16 +1,17 @@
 package initializers
 
 import (
+	"os"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
 )
 
 var DB *gorm.DB
 
 func ConnectDB() {
 	var err error
-	dns := os.Getenv("DNS")
+	dns := os.Getenv("DB")
 	DB, err = gorm.Open(postgres.Open(dns), &gorm.Config{})
 
 	if err != nil {
